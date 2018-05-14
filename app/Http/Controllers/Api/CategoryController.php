@@ -5,7 +5,6 @@ namespace CodeShopping\Http\Controllers\Api;
 use CodeShopping\Http\Controllers\Controller;
 use CodeShopping\Http\Requests\CategoryRequest;
 use CodeShopping\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -37,6 +36,8 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return response([],204);
     }
 }
