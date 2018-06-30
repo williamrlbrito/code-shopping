@@ -18,4 +18,9 @@ class ProductPhoto extends Model
         $path = self::PRODUCTS_PATH;
         return storage_path("{$path}/{$productSlug}");
     }
+
+    public function product() 
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
