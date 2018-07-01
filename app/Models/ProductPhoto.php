@@ -33,6 +33,12 @@ class ProductPhoto extends Model
         return "{$dir}/{$productSlug}";
     }
 
+    public function getPhotoUrlAttribute() 
+    {
+        $path = self::photosDir($this->product->slug);
+        return asset("william/{$path}/{$this->file_name}");
+    }
+
     public function product() 
     {
         return $this->belongsTo(Product::class);
