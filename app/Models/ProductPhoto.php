@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CodeShopping\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductPhoto extends Model
@@ -17,6 +20,26 @@ class ProductPhoto extends Model
     {
         $path = self::PRODUCTS_PATH;
         return storage_path("{$path}/{$productSlug}");
+    }
+
+    public static function createWithPhotosFiles(int $productId, array $files)
+    {
+        $product = Product::find($productId);
+        self::uploadFiles($product->slug, $files);
+        $photos = self::createPhotosModels($product->id, $files);
+        return new Collection($photos);
+    }
+
+    private static function createPhotosModels(int $productId, array $files): array
+    {
+        $photos = [];
+        foreach($files as $file) {
+            $photos[] = self::create([
+                'product_id' => $productId,
+                'file_name' => $file->hasName()
+            ]);
+        }
+        return $photos;
     }
 
     public static function uploadFiles($productSlug, array $files)
