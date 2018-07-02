@@ -24,10 +24,19 @@ class ProductPhoto extends Model
 
     public static function createWithPhotosFiles(int $productId, array $files)
     {
-        $product = Product::find($productId);
-        self::uploadFiles($product->slug, $files);
-        $photos = self::createPhotosModels($product->id, $files);
-        return new Collection($photos);
+        try {
+            \DB::beginTransaction();
+            $product = Product::find($productId);
+            self::uploadFiles($product->slug, $files);
+            $photos = self::createPhotosModels($product->id, $files);
+            \DB::commit();
+            return new Collection($photos);
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            self::deleteFiles($product->slug, $files);
+            throw $e;
+        }
+        
     }
 
     private static function createPhotosModels(int $productId, array $files): array
@@ -40,6 +49,17 @@ class ProductPhoto extends Model
             ]);
         }
         return $photos;
+    }
+
+    private static function deleteFiles($productSlug, array $files)
+    {
+        foreach ($files as $file) {
+            $path = self::photosPath($productSlug);
+            $filePath = "{$path}/{$file->hashName()}";
+            if (file_exists($filePath)) {
+                \File::delete($filePath);
+            }
+        }
     }
 
     public static function uploadFiles($productSlug, array $files)
