@@ -36,7 +36,7 @@ class ProductPhoto extends Model
         foreach($files as $file) {
             $photos[] = self::create([
                 'product_id' => $productId,
-                'file_name' => $file->hasName()
+                'file_name' => $file->hashName()
             ]);
         }
         return $photos;
