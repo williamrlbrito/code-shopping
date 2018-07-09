@@ -6,6 +6,7 @@ namespace CodeShopping\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 class ProductPhoto extends Model
 {
@@ -37,6 +38,30 @@ class ProductPhoto extends Model
             throw $e;
         }
         
+    }
+
+    public function updateWithPhoto(UploadedFile $file): ProductPhoto
+    {
+        try {
+            \DB::beginTransaction();
+            self::uploadFiles($this->product->slug, [$file]);
+            $this->deletePhoto($this->file_name);
+            $this->file_name = $file->hashName();
+            $this->save();
+            \DB::commit();
+            return $this;
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            self::deleteFiles($this->product->slug, [$file]);
+            throw $e;
+        }
+        
+    }
+
+    private function deletePhoto($fileName)
+    {
+        $dir = self::photosDir($this->product->slug);
+        \Storage::disk('public')->delete("{$dir}/{$fileName}");
     }
 
     private static function createPhotosModels(int $productId, array $files): array

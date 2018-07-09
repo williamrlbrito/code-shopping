@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use CodeShopping\Models\Product;
 use CodeShopping\Models\ProductPhoto;
 use Illuminate\Support\Collection;
-use Illuminate\Http\uploadedFile;
+use Illuminate\Http\UploadedFile;
 
 class ProductPhotosTableSeeder extends Seeder
 {
@@ -67,7 +67,7 @@ class ProductPhotosTableSeeder extends Seeder
     private function uploadPhoto($productSlug): string
     {
         $photoFile = $this->allFakerPhotos->random();
-        $uploadFile = new uploadedFile(
+        $uploadFile = new UploadedFile(
             $photoFile->getRealPath(),
             str_random() . '.' . $photoFile->getExtension()
         );
