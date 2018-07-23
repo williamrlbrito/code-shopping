@@ -35,15 +35,17 @@ class ProductPhotoController extends Controller
         return new ProductPhotoResource($photo);
     }
 
+    public function destroy(Product $product, ProductPhoto $photo)
+    {
+        $this->assertProductPhoto($product, $photo);
+        $photo->deleteWithPhoto();
+        return response()->json([], 204);
+    }
+
     private function assertProductPhoto(Product $product, ProductPhoto $photo) 
     {
         if ($photo->product_id != $product->id) {
             abort(404);
         }
-    }
-
-    public function destroy(ProductPhoto $productPhoto)
-    {
-        //
     }
 }

@@ -55,7 +55,20 @@ class ProductPhoto extends Model
             self::deleteFiles($this->product->slug, [$file]);
             throw $e;
         }
-        
+    }
+
+    public function deleteWithPhoto(): bool 
+    {
+        try {
+            \DB::beginTransaction();
+            $this->deletePhoto($this->file_name);
+            $result = $this->delete();
+            \DB::commit();
+            return $result;
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            throw $e;
+        }
     }
 
     private function deletePhoto($fileName)
