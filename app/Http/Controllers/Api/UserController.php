@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use CodeShopping\Http\Controllers\Controller;
 use CodeShopping\Models\User;
 use CodeShopping\Http\Resources\UserResource;
+use CodeShopping\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -15,9 +16,10 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $user = User::createCustom($request->all());
+        return new UserResource($user);
     }
 
     public function show(User $user)
