@@ -25,7 +25,7 @@ class SendMailToDefinePassword
     public function handle(UserCreatedEvent $event)
     {
         $user = $event->getUser();
-        $token = \Password::broken()->createToken($user);
+        $token = \Password::broker()->createToken($user);
         $user->sendPasswordResetNotification($token);
     }
 }
