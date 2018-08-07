@@ -5,8 +5,9 @@ namespace CodeShopping\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, SoftDeletes;
 
@@ -33,5 +34,18 @@ class User extends Authenticatable
     {
         !isset($attributes['password']) ? : $attributes['password'] = bcrypt($attributes['password']);
         return parent::fill($attributes);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->id;
+    }
+
+    public function getJWTCustomClains()
+    {
+        return [
+            'email' => $this->email,
+            'name' => $this->name
+        ];
     }
 }
