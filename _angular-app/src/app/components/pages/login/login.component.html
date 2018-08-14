@@ -1,4 +1,4 @@
-<form class="form-signin">
+<form class="form-signin" (submit)="submit()">
   <h1 class="h3 mb-3 font-weight-normal">Code Shopping - Login</h1>
   <label for="email" class="sr-only">E-mail</label>
   <input type="email" id="email" name="email" class="form-control" placeholder="Digite e e-mail" [(ngModel)]="credentials.email" required autofocus>
