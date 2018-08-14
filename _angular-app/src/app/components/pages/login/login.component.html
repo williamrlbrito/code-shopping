@@ -1,8 +1,9 @@
 <form class="form-signin">
   <h1 class="h3 mb-3 font-weight-normal">Code Shopping - Login</h1>
   <label for="email" class="sr-only">E-mail</label>
-  <input type="email" id="email" class="form-control" placeholder="Digite e e-mail" required autofocus>
+  <input type="email" id="email" name="email" class="form-control" placeholder="Digite e e-mail" [(ngModel)]="credentials.email" required autofocus>
   <label for="password" class="sr-only">Password</label>
-  <input type="password" id="password" class="form-control" placeholder="Digite sua senha" required>
+  <input type="password" id="password" name="password" class="form-control" placeholder="Digite sua senha" [(ngModel)]="credentials.password" required>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
 </form>
+{{ credentials | json }}
