@@ -7,6 +7,7 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { CategoryListComponent } from './components/pages/category/category-list/category-list.component';
+import { patch } from 'webdriver-js-extender';
 
 const routes: Routes = [
   {
@@ -14,6 +15,11 @@ const routes: Routes = [
   },
   {
     path: 'categories/list', component: CategoryListComponent
+  },
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
   }
 ];
 
