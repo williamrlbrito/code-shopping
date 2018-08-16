@@ -17,7 +17,10 @@ export class CategoryListComponent implements OnInit {
   ngOnInit() {
     const token = window.localStorage.getItem('token');
     this.http.get<any>('http://localhost:8000/api/categories', { headers: { 'Authorization': `Bearer ${token}` } })
-      .subscribe((response) => this.categories = response.data);
+      .subscribe((response) => {
+        response.data[0].active = false;
+        this.categories = response.data
+      });
   }
 
 }
