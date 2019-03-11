@@ -13,7 +13,7 @@ export class ModalComponent implements OnInit {
   @Output()
   onHide: EventEmitter<Event> = new EventEmitter<Event>();
 
-  constructor(private element: ElementRef) { 
+  constructor(private element: ElementRef) {
 
   }
 
@@ -23,20 +23,19 @@ export class ModalComponent implements OnInit {
     jQueryElement.find('[modal-body]').addClass('modal-body');
     jQueryElement.find('[modal-footer]').addClass('modal-footer');
     jQueryElement.on('hidden.bs.modal', (e) => {
-      console.log(e);
       this.onHide.emit(e);
     });
   }
 
-  show(){
+  show() {
     this.getjQueryElement().modal('show');
   }
 
-  hide(){
+  hide() {
     this.getjQueryElement().modal('hide');
   }
 
-  private getjQueryElement(){
+  private getjQueryElement() {
     const nativeElement = this.element.nativeElement;
     return $(nativeElement.firstChild);
   }

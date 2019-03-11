@@ -32,8 +32,8 @@ export class CategoryListComponent implements OnInit {
     const token = window.localStorage.getItem('token');
     this.http.post('http://localhost:8000/api/categories', this.category, { headers: { 'Authorization': `Bearer ${token}` } })
       .subscribe((category) => {
+        this.modal.hide();
         this.getCategories();
-        $('#exampleModal').modal('hide');
       });
   }
 
@@ -45,14 +45,11 @@ export class CategoryListComponent implements OnInit {
       });
   }
 
-  showModal(){
+  showModal() {
     this.modal.show();
-    setTimeout(()=>{
-      this.modal.hide();
-    }, 3000);
   }
 
-  hideModal(e: Event){
+  hideModal(e: Event) {
     console.log(e);
   }
 }
