@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ModalComponent } from 'src/app/components/bootstrap/modal/modal.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'category-new-modal',
@@ -13,8 +13,9 @@ export class CategoryNewModalComponent implements OnInit {
     name: ''
   }
 
-  @ViewChild(ModalComponent)
-  modal: ModalComponent;
+  @ViewChild(ModalComponent) modal: ModalComponent;
+  @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
   constructor(private http: HttpClient) { }
 
@@ -25,8 +26,9 @@ export class CategoryNewModalComponent implements OnInit {
     const token = window.localStorage.getItem('token');
     this.http.post('http://localhost:8000/api/categories', this.category, { headers: { 'Authorization': `Bearer ${token}` } })
       .subscribe((category) => {
+        this.onSuccess.emit(category);
         this.modal.hide();
-      });
+      }, error => this.onError.emit(error));
   }
 
   showModal() {
