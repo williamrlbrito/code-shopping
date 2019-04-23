@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CategoryNewModalComponent } from '../category-new-modal/category-new-modal.component';
+import { CategoryEditModalComponent } from '../category-edit-modal/category-edit-modal.component';
 
 @Component({
   selector: 'app-category-list',
@@ -13,6 +14,11 @@ export class CategoryListComponent implements OnInit {
 
   @ViewChild(CategoryNewModalComponent)
   categoryNewModal: CategoryNewModalComponent;
+
+  @ViewChild(CategoryEditModalComponent)
+  categoryEditModal: CategoryEditModalComponent;
+
+  categoryId: number;
 
   constructor(private http: HttpClient) {
 
@@ -32,6 +38,11 @@ export class CategoryListComponent implements OnInit {
 
   showModalInsert() {
     this.categoryNewModal.showModal();
+  }
+
+  showModalEdit(categoryId: number) {
+    this.categoryId = categoryId;
+    this.categoryEditModal.showModal();
   }
 
   onInsertSuccess(category: any) {
