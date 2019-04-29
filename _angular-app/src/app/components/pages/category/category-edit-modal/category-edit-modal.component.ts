@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ModalComponent } from 'src/app/components/bootstrap/modal/modal.component';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Category } from 'src/app/models';
 
 @Component({
   selector: 'category-edit-modal',
@@ -9,7 +10,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class CategoryEditModalComponent implements OnInit {
 
-  category = {
+  category: Category = {
     name: '',
     active: true
   }

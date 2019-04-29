@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { ModalComponent } from 'src/app/components/bootstrap/modal/modal.component';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { Category } from 'src/app/models';
 
 @Component({
   selector: 'category-delete-modal',
@@ -9,7 +10,7 @@ import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 })
 export class CategoryDeleteModalComponent implements OnInit {
 
-  category = null;
+  category: Category = null;
 
   _categoryId: number;
 
