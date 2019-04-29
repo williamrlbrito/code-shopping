@@ -5,8 +5,7 @@ import { CategoryEditModalComponent } from '../category-edit-modal/category-edit
 import { CategoryDeleteModalComponent } from '../category-delete-modal/category-delete-modal.component';
 import { CategoryHttpService } from 'src/app/services/http/category-http.service';
 import { Category } from 'src/app/models';
-import PNotify from 'pnotify/dist/es/PNotify';
-import PNotifyButtons from 'pnotify/dist/es/PNotifyButtons';
+import { NotifyMessageService } from 'src/app/services/notify-message.service';
 
 @Component({
   selector: 'category-list',
@@ -28,7 +27,9 @@ export class CategoryListComponent implements OnInit {
 
   categoryId: number;
 
-  constructor(private CategoryHttp: CategoryHttpService) {
+  constructor(
+    private CategoryHttp: CategoryHttpService,
+    private notifyMessage: NotifyMessageService) {
 
   }
 
@@ -59,7 +60,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   onInsertSuccess(category: any) {
-    console.log(category);
+    this.notifyMessage.success('Categoria cadastrada com sucesso.');
     this.getCategories();
   }
 
@@ -83,11 +84,7 @@ export class CategoryListComponent implements OnInit {
 
   onDeleteError(error: HttpErrorResponse) {
     console.log(error);
-  }
-
-  showNotify() {
-    PNotifyButtons;
-    PNotify.alert('Olá', 'success');
+    this.notifyMessage.error('Erro ao tentar remover categoria.');
   }
 
 }
