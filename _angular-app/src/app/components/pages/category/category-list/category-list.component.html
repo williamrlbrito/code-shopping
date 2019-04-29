@@ -4,7 +4,7 @@
     <thead>
       <tr>
         <td colspan="5">
-          <button type="button" class="btn btn-primary" (click)="showModalInsert()">
+          <button type="button" class="btn btn-primary" (click)="categoryInsertService.showModalInsert()">
             Nova categoria
           </button>
         </td>
@@ -26,11 +26,11 @@
         </td>
         <td>{{ category.created_at.date | date: 'dd/MM/yyyy' }}</td>
         <td>
-          <a href="javascript:void(0)" (click)="showModalEdit(category.id)">
+          <a href="javascript:void(0)" (click)="categoryEditService.showModalEdit(category.id)">
             <i class="fas fa-edit"></i>
           </a>
           |
-          <a href="javascript:void(0)" (click)="showModalDelete(category.id)">
+          <a href="javascript:void(0)" (click)="categoryDeleteService.showModalDelete(category.id)">
             <i class="fas fa-trash-alt"></i>
           </a>
         </td>
@@ -38,9 +38,12 @@
     </tbody>
   </table>
 </div>
-<category-new-modal (onSuccess)="onInsertSuccess($event)" (onError)="onInsertError($event)"></category-new-modal>
-<category-edit-modal (onSuccess)="onEditSuccess($event)" (onError)="onEditError($event)" [categoryId]="categoryId">
+<category-new-modal (onSuccess)="categoryInsertService.onInsertSuccess($event)"
+  (onError)="categoryInsertService.onInsertError($event)">
+</category-new-modal>
+<category-edit-modal (onSuccess)="categoryEditService.onEditSuccess($event)"
+  (onError)="categoryEditService.onEditError($event)" [categoryId]="categoryId">
 </category-edit-modal>
-<category-delete-modal (onSuccess)="onDeleteSuccess($event)" (onError)="onDeleteError($event)"
-  [categoryId]="categoryId">
+<category-delete-modal (onSuccess)="categoryDeleteService.onDeleteSuccess($event)"
+  (onError)="categoryDeleteService.onDeleteError($event)" [categoryId]="categoryId">
 </category-delete-modal>
