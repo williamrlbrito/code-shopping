@@ -39,7 +39,7 @@ export class CategoryEditModalComponent implements OnInit {
 
   submit() {
     this.categoryHttp
-      .create(this.category)
+      .update(this._categoryId, this.category)
       .subscribe((category) => {
         this.onSuccess.emit(category);
         this.modal.hide();
