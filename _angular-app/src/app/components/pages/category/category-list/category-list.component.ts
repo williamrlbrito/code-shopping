@@ -5,6 +5,8 @@ import { CategoryEditModalComponent } from '../category-edit-modal/category-edit
 import { CategoryDeleteModalComponent } from '../category-delete-modal/category-delete-modal.component';
 import { CategoryHttpService } from 'src/app/services/http/category-http.service';
 import { Category } from 'src/app/models';
+import PNotify from 'pnotify/dist/es/PNotify';
+import PNotifyButtons from 'pnotify/dist/es/PNotifyButtons';
 
 @Component({
   selector: 'category-list',
@@ -81,6 +83,11 @@ export class CategoryListComponent implements OnInit {
 
   onDeleteError(error: HttpErrorResponse) {
     console.log(error);
+  }
+
+  showNotify() {
+    PNotifyButtons;
+    PNotify.alert('Olá', 'success');
   }
 
 }
