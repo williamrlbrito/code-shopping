@@ -22,7 +22,7 @@ export class CategoryEditModalComponent implements OnInit {
   @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
   @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
-  constructor(private http: HttpClient, private categoryHttp: CategoryHttpService) { }
+  constructor(private categoryHttp: CategoryHttpService) { }
 
   ngOnInit() {
   }
@@ -38,8 +38,8 @@ export class CategoryEditModalComponent implements OnInit {
   }
 
   submit() {
-    const token = window.localStorage.getItem('token');
-    this.http.put(`http://localhost:8000/api/categories/${this._categoryId}`, this.category, { headers: { 'Authorization': `Bearer ${token}` } })
+    this.categoryHttp
+      .create(this.category)
       .subscribe((category) => {
         this.onSuccess.emit(category);
         this.modal.hide();

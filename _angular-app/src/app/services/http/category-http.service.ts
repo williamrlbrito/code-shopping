@@ -9,22 +9,31 @@ import { Category } from 'src/app/models';
 })
 export class CategoryHttpService {
 
+  private baseUrl = 'http://localhost:8000/api/categories';
+
   constructor(private http: HttpClient) { }
 
   list(): Observable<{ data: Array<Category> }> {
     const token = window.localStorage.getItem('token');
-    return this.http.get<{ data: Array<Category> }>('http://localhost:8000/api/categories', { headers: { 'Authorization': `Bearer ${token}` } });
+    return this.http.get<{ data: Array<Category> }>(this.baseUrl, { headers: { 'Authorization': `Bearer ${token}` } });
   }
 
   get(id: number): Observable<Category> {
     const token = window.localStorage.getItem('token');
-    return this.http.get<{ data: Category }>(`http://localhost:8000/api/categories/${id}`, { headers: { 'Authorization': `Bearer ${token}` } }).pipe(
-      map(response => response.data)
-    );
+    return this.http
+      .get<{ data: Category }>(`${this.baseUrl}/${id}`, { headers: { 'Authorization': `Bearer ${token}` } })
+      .pipe(
+        map(response => response.data)
+      );
   }
 
-  create() {
-
+  create(data: Category): Observable<Category> {
+    const token = window.localStorage.getItem('token');
+    return this.http
+      .post<{ data: Category }>(this.baseUrl, data, { headers: { 'Authorization': `Bearer ${token}` } })
+      .pipe(
+        map(response => response.data)
+      );
   }
 
   update() {
