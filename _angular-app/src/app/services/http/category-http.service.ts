@@ -15,7 +15,8 @@ export class CategoryHttpService {
 
   list(): Observable<{ data: Array<Category> }> {
     const token = window.localStorage.getItem('token');
-    return this.http.get<{ data: Array<Category> }>(this.baseUrl, { headers: { 'Authorization': `Bearer ${token}` } });
+    return this.http
+      .get<{ data: Array<Category> }>(this.baseUrl, { headers: { 'Authorization': `Bearer ${token}` } });
   }
 
   get(id: number): Observable<Category> {
@@ -36,7 +37,7 @@ export class CategoryHttpService {
       );
   }
 
-  update(id: number, data: Category) {
+  update(id: number, data: Category): Observable<Category> {
     const token = window.localStorage.getItem('token');
     return this.http
       .put<{ data: Category }>(`${this.baseUrl}/${id}`, data, { headers: { 'Authorization': `Bearer ${token}` } })
@@ -45,5 +46,10 @@ export class CategoryHttpService {
       );
   }
 
+  destroy(id: number): Observable<any> {
+    const token = window.localStorage.getItem('token');
+    return this.http
+      .delete(`${this.baseUrl}/${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
+  }
 
 }
