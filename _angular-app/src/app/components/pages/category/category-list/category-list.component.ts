@@ -16,7 +16,11 @@ import { CategoryDeleteService } from './category-delete.service';
 export class CategoryListComponent implements OnInit {
 
   categories: Array<Category> = [];
-  page = 1;
+  pagination = {
+    page: 1,
+    totalItems: 0,
+    itemsPerPage: 15
+  };
 
   @ViewChild(CategoryNewModalComponent)
   categoryNewModal: CategoryNewModalComponent;
@@ -45,10 +49,16 @@ export class CategoryListComponent implements OnInit {
   }
 
   getCategories() {
-    const token = window.localStorage.getItem('token');
-    this.CategoryHttp.list()
+    this.CategoryHttp.list(this.pagination.page)
       .subscribe((response) => {
         this.categories = response.data;
+        this.pagination.totalItems = response.meta.total;
+        this.pagination.itemsPerPage = response.meta.per_page;
       });
+  }
+
+  pageChanged(page) {
+    this.pagination.page = page;
+    this.getCategories();
   }
 }
